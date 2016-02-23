@@ -14,14 +14,22 @@
     </style>
   </head>
   <body>
+    <input id="regSoundURL" autocomplete="off" /><button onclick="registerNewSound()">New sound</button>
+
     <ul id="messages"></ul>
     <form action="">
       <input id="m" autocomplete="off" /><button>Send</button>
     </form>
 
+
     <script src="/socket.io/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
+      function registerNewSound(){
+        console.log(document.getElementById("regSoundURL").value);
+        socket.emit('registerSound', document.getElementById("regSoundURL").value);
+      }
+
       function playSound(id) {
         console.log("hola");
         if (dictSounds[id] === null) {
@@ -37,20 +45,25 @@
         }
       }
 
-      function initSound(id, url){
+      function loadSound(id, url){
         dictSounds[id] = new Audio(url);
       }
 
-      //var audio = new Audio('media/glass.mp3');
       var dictSounds = [];
-      initSound("a", "media/glass.mp3")
-      initSound("b", "media/laugh.mp3")
-
+      (function loadInitialSounds(){
+        loadSound("a", "media/glass.mp3")
+        loadSound("b", "media/laugh.mp3")
+      })();
+      
       var socket = io();
       $('form').submit(function(){
         socket.emit('chat message', $('#m').val());
         $('#m').val('');
         return false;
+      });
+
+      socket.on('newSound', function(msg){
+        loadSound("c", msg);
       });
 
       socket.on('chat message', function(msg){
