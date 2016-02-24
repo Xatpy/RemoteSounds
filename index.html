@@ -32,17 +32,28 @@
 
       function playSound(id) {
         console.log("hola");
-        if (dictSounds[id] === null) {
+        if ((dictSounds[id] === null) || (dictSounds[id] === undefined)) {
           console.log("Sound " + id + " is not loaded.");
           return;
         }
 
-        if (!dictSounds[id].paused) {
+        if (!dictSounds[id].sound.paused) {
           //is playing
-          dictSounds[id].cloneNode(true).play();
+          dictSounds[id].sound.cloneNode(true).play();
         } else {
-          dictSounds[id].play();          
+          dictSounds[id].sound.play();          
         }
+      }
+
+      function addSound(obj) {
+        debugger
+        obj.sound = new Audio(obj.sound);
+        dictSounds.push(obj);
+        /*dictSounds[id] = obj;
+        obj.id = id;
+        obj.name = list[i].name;
+        obj.sound = new Audio(list[i].sound); 
+        obj.img = list[i].img;*/
       }
 
       function loadSound(id, url){
@@ -50,22 +61,47 @@
       }
 
       var dictSounds = [];
+      /*
       (function loadInitialSounds(){
         loadSound("a", "media/glass.mp3")
         loadSound("b", "media/laugh.mp3")
       })();
+      */
+
+      function initSounds(serverSounds){
+        debugger
+        var list = serverSounds.listSounds;
+        for (var i = 0; i < list.length; ++i) {
+          var id = list[i].id;
+          if ( (dictSounds[id] === null) || (dictSounds[id] === undefined) )
+          {
+            addSound(list[i]);
+          }
+        }
+      }
       
       var socket = io();
+
+      // Load initial sound when new session
+      socket.on('newConnection', function(msg){
+        console.log("new connection");
+        debugger
+        initSounds(msg);
+      });
+
+      // Register new sound
       $('form').submit(function(){
         socket.emit('chat message', $('#m').val());
         $('#m').val('');
         return false;
       });
 
+      // Load new sound event
       socket.on('newSound', function(msg){
-        loadSound("c", msg);
-      });
+        addSound(msg);
+      });      
 
+      // Chat message
       socket.on('chat message', function(msg){
         $('#messages').append($('<li>').text(msg));
         playSound(msg);
