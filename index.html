@@ -2,6 +2,10 @@
 <html>
   <head>
     <title>RemoteSounds</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body { font: 13px Helvetica, Arial; }
@@ -12,13 +16,60 @@
       #messages li { padding: 5px 10px; }
       #messages li:nth-child(odd) { background: #eee; }
     </style>
+
+<!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+
   </head>
   <body>
-    <input id="regSoundURL" autocomplete="off" /><button onclick="registerNewSound()">New sound</button>
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo center">
+          <b>Remote sounds</b>
+        </a>
+      </div>
+    </nav>
+
+    <section>
+      
+    </section>
+
+    <section>
+    <ul class="collapsible z-depth-3" data-collapsible="accordion">
+      <li>
+        <div class="collapsible-header"><i class="material-icons">note_add</i>
+          <h5><b>Add sound</b></h5>
+        </div>
+
+        <div class="collapsible-body">
+          <table>
+            <tbody>
+              <tr>
+                <td class="right-align">
+                  <label><b>Sound</b> URL(*):</label>
+                </td>
+                <td colspan="2">
+                  <input id="regSoundURL" autocomplete="off" class="validate"/>
+                </td>
+                <td rowspan="2" class="center-align">
+                  <button class="btn waves-effect waves-light center-align" onclick="registerNewSound()">Register sound</button>
+                </td>
+              </tr>
+              <tr>
+                <td class="right-align"><label for="email"><b>Image</b> URL:</label></td>
+                <td class="input-field" colspan="2"><input id="" autocomplete="off" /></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </li>
+    </ul>
+    </section>   
+
 
     <ul id="messages"></ul>
     <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
+      <input id="m" autocomplete="off" style=" color: rgb(130, 224, 255);"/><button>Send</button>
     </form>
 
 
@@ -106,7 +157,13 @@
         $('#messages').append($('<li>').text(msg));
         playSound(msg);
       });
+
     </script>
+
+  <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
 
   </body>
 </html>
