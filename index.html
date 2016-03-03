@@ -62,7 +62,7 @@
                     <label><b>Sound</b> URL(*):</label>
                   </td>
                   <td colspan="2">
-                    <input id="regSoundURL" autocomplete="off" class="validate"/ id="newSoundURL">
+                    <input id="newSoundURL" autocomplete="off" class="validate" />
                   </td>
                   <td rowspan="2" class="center-align">
                     <button class="btn waves-effect waves-light center-align" onclick="registerNewSound()">Register sound</button>
@@ -70,7 +70,9 @@
                 </tr>
                 <tr>
                   <td class="right-align"><label for="email"><b>Image</b> URL:</label></td>
-                  <td class="input-field" colspan="2"><input id="newImageURL" autocomplete="off" /></td>
+                  <td class="input-field" colspan="2">
+                    <input id="newImageURL" autocomplete="off" />
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -120,21 +122,15 @@
       ];
 
       $(".brick").each(function() {
-        debugger
         this.style.backgroundColor =  colour[colour.length * Math.random() << 0];
       });
 
       function pressButtonSound(idSound){
-        debugger
+        //debugger
         socket.emit('chat message', parseInt(idSound));
         $('#m').val('');
         return false;
       }
-
-      function registerNewSound(){
-         console.log(document.getElementById("regSoundURL").value);
-         socket.emit('registerSound', document.getElementById("regSoundURL").value);
-       }
 
       //$(function() {
         var wall = new Freewall("#freewall");
@@ -162,7 +158,7 @@
         {
           var html = "";
 
-          debugger
+          //debugger
           var image = "http://www.echoecho.com/i/rainbow.gif"; // default
           if ( (image !== undefined) && (image !== null) ) {
             image = imageURL;
@@ -192,7 +188,7 @@
       }
 
       function addSound(obj) {
-        debugger
+        //debugger
         obj.sound = new Audio(obj.sound);
         dictSounds[obj.id] = obj;
       }
@@ -204,7 +200,7 @@
       var dictSounds = [];
 
       function initSounds(serverSounds){
-        debugger
+        //debugger
         var list = serverSounds.listSounds;
         for (var cont = 0; cont < list.length; ++cont) {
           var id = list[cont].id;
@@ -239,12 +235,50 @@
 
       // Chat message
       socket.on('chat message', function(msg){
-        debugger
+        //debugger
         $('#messages').append($('<li>').text(msg));
         playSound(msg);
       });
 
 
+      function isValidURL(str) {
+         return /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(str);
+      }
+
+      function checkURLs(soundURL, imageURL){
+        var messageError = null;
+
+        if (!isValidURL(soundURL)){
+          if (messageError === null) {
+            messageError = "";
+          }
+          messageError += "Sound URL is invalid \n";
+        }
+        if (!isValidURL(imageURL)){
+          if (messageError === null) {
+            messageError = "";
+          }
+          messageError += "Image URL is invalid \n";
+        }
+
+        if (messageError !== null){
+          console.log("invalid");
+          return false;
+        }
+
+        return true;
+      }
+
+      function registerNewSound(){
+        // Check input
+        var soundURL = document.getElementById("newSoundURL").value;
+        var imageURL = document.getElementById("newImageURL").value;
+
+        if (checkURLs(soundURL, imageURL)){
+          socket.emit('registerSound', soundURL, imageURL);
+        }
+
+       }
 
       //});
 

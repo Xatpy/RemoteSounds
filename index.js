@@ -13,8 +13,8 @@ app.get('/', function(req, res){
 
 // Sounds by default
 var obj = {};
-var id1 = {"id":1, "name":"hola", "sound": "media/glass.mp3", "img": "media/vaso.jpg"};
-var id2 = {"id":2, "name":"adios", "sound": "media/laugh.mp3", "img": "media/risa.jpg"};
+var id1 = {"id":0, "name":"hola", "sound": "media/glass.mp3", "img": "media/vaso.jpg"};
+var id2 = {"id":1, "name":"adios", "sound": "media/laugh.mp3", "img": "media/risa.jpg"};
 obj.listSounds = [];
 obj.listSounds.push(id1);
 obj.listSounds.push(id2);
@@ -28,14 +28,15 @@ io.on('connection', function(socket){
 		io.emit('chat message', msg);
 	});
 
-	socket.on('registerSound', function(msg){
+	socket.on('registerSound', function(soundURL, imageURL){
 		debugger
-		console.log("New sound registered: " + msg);
+		console.log("New sound registered: " + soundURL);
+		console.log("New image registered: " + imageURL);
 		var newSoundObj = { 
 			"id":obj.listSounds.length + 1, 
 			"name": msg, 
-			"sound": msg, 
-			"img": "img"
+			"sound": soundURL, 
+			"img": imageURL
 		};
 		obj.listSounds.push(newSoundObj);
 		io.emit('newSound', newSoundObj);
