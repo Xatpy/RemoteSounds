@@ -62,7 +62,7 @@
                     <label><b>Sound</b> URL(*):</label>
                   </td>
                   <td colspan="2">
-                    <input id="regSoundURL" autocomplete="off" class="validate"/>
+                    <input id="regSoundURL" autocomplete="off" class="validate"/ id="newSoundURL">
                   </td>
                   <td rowspan="2" class="center-align">
                     <button class="btn waves-effect waves-light center-align" onclick="registerNewSound()">Register sound</button>
@@ -70,7 +70,7 @@
                 </tr>
                 <tr>
                   <td class="right-align"><label for="email"><b>Image</b> URL:</label></td>
-                  <td class="input-field" colspan="2"><input id="" autocomplete="off" /></td>
+                  <td class="input-field" colspan="2"><input id="newImageURL" autocomplete="off" /></td>
                 </tr>
               </tbody>
             </table>
@@ -120,15 +120,21 @@
       ];
 
       $(".brick").each(function() {
+        debugger
         this.style.backgroundColor =  colour[colour.length * Math.random() << 0];
       });
 
-      function registerNewSound(){
+      function pressButtonSound(idSound){
         debugger
-        socket.emit('chat message', "1");
+        socket.emit('chat message', parseInt(idSound));
         $('#m').val('');
         return false;
       }
+
+      function registerNewSound(){
+         console.log(document.getElementById("regSoundURL").value);
+         socket.emit('registerSound', document.getElementById("regSoundURL").value);
+       }
 
       //$(function() {
         var wall = new Freewall("#freewall");
@@ -144,34 +150,34 @@
           }
         });
         wall.fitWidth();
-        debugger
 
-        var temp = '<div class="brick {size}" style="background-color: {color}"><div class="cover"><input type="image" src="{image}" alt="Submit" width="150" height="110" onclick="registerNewSound()"></div></div>';
+        var temp = '<div class="brick {size}" style="background-color: {color}"><div class="cover"><input type="image" src="{image}" alt="Submit" width="150" height="110" id={id} onclick="pressButtonSound(this.id)"></div></div>';
 
 
         $(".add-more").click(function() {
           addBlock();
         });
 
-        function addBlock(imageURL)
+        function addBlock(imageURL, id)
         {
           var html = "";
-          for (var i = 0; i < 1; ++i) {
-            debugger
-            var image = "http://www.echoecho.com/i/rainbow.gif"; // default
-            if ( (image !== undefined) && (image !== null) ) {
-              image = imageURL;
-            }
 
-            html += temp.replace('{size}', 'size11')
-                  .replace('{color}', colour[colour.length * Math.random() << 0])
-                  .replace('{image}', image);
+          debugger
+          var image = "http://www.echoecho.com/i/rainbow.gif"; // default
+          if ( (image !== undefined) && (image !== null) ) {
+            image = imageURL;
           }
+
+          html += temp.replace('{size}', 'size11')
+                .replace('{color}', colour[colour.length * Math.random() << 0])
+                .replace('{image}', image)
+                .replace('{id}', id);
+
           wall.appendBlock(html);
         }
 
       function playSound(id) {
-        console.log("hola");
+        console.log("play sound");
         if ((dictSounds[id] === null) || (dictSounds[id] === undefined)) {
           console.log("Sound " + id + " is not loaded.");
           return;
@@ -186,14 +192,9 @@
       }
 
       function addSound(obj) {
-        //debugger
+        debugger
         obj.sound = new Audio(obj.sound);
-        dictSounds.push(obj);
-        /*dictSounds[id] = obj;
-        obj.id = id;
-        obj.name = list[i].name;
-        obj.sound = new Audio(list[i].sound); 
-        obj.img = list[i].img;*/
+        dictSounds[obj.id] = obj;
       }
 
       function loadSound(id, url){
@@ -201,22 +202,16 @@
       }
 
       var dictSounds = [];
-      /*
-      (function loadInitialSounds(){
-        loadSound("a", "media/glass.mp3")
-        loadSound("b", "media/laugh.mp3")
-      })();
-      */
 
       function initSounds(serverSounds){
-        //debugger
+        debugger
         var list = serverSounds.listSounds;
-        for (var i = 0; i < list.length; ++i) {
-          var id = list[i].id;
+        for (var cont = 0; cont < list.length; ++cont) {
+          var id = list[cont].id;
           if ( (dictSounds[id] === null) || (dictSounds[id] === undefined) )
           {
-            addSound(list[i]);
-            addBlock(list[i].img);
+            addSound(list[cont]);
+            addBlock(list[cont].img, list[cont].id);
           }
         }
       }
@@ -244,21 +239,14 @@
 
       // Chat message
       socket.on('chat message', function(msg){
+        debugger
         $('#messages').append($('<li>').text(msg));
         playSound(msg);
       });
 
 
 
-
-
-
-
-
-
       //});
-
-
 
 
 
