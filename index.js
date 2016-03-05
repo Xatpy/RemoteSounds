@@ -34,7 +34,7 @@ io.on('connection', function(socket){
 		console.log("New image registered: " + imageURL);
 		var newSoundObj = { 
 			"id":obj.listSounds.length + 1, 
-			"name": msg, 
+			//"name": msg, 
 			"sound": soundURL, 
 			"img": imageURL
 		};

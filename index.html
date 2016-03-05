@@ -20,9 +20,21 @@
       form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
       form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
       form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-      #messages { list-style-type: none; margin: 0; padding: 0; }
+
+      #messages { list-style-type: none; margin: 0; padding: 0; 
+        /*background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; max-height: 200px;*/
+      }
       #messages li { padding: 5px 10px; }
       #messages li:nth-child(odd) { background: #eee; }
+
+      footer {
+          background-color: #333;
+          width: 100%;
+          bottom: 0;
+          position: fixed;
+          height: 70px;
+          overflow-y: scroll;
+      }
 
       .free-wall {
         margin: 15px;
@@ -94,12 +106,31 @@
     </section>
 
     <!-- log -->
+
+    <footer>
+      <b>Log</b>
+      <!--<ul class="collapsible" data-collapsible="accordion">
+        <li>
+          <div class="collapsible-header"><i class="material-icons">Log</div>
+          <div class="collapsible-body">
+            <ul id="messages"></ul>
+          </div>
+        </li>
+      </ul>-->
+      <ul id="messages"></ul>
+    </footer>
+
+    <section>
+    </section>
+    <!--
     <section>
       <ul id="messages"></ul>
       <form action="">
         <input id="m" autocomplete="off" style=" color: rgb(130, 224, 255);"/><button>Send</button>
       </form>
-    <section>
+    <section>-->
+
+    <!-- #### CODE #### -->
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
@@ -223,14 +254,21 @@
 
       // Load new sound event
       socket.on('newSound', function(msg){
+        debugger
         addSound(msg);
+        addBlock(msg.img);
       });      
 
       // Chat message
       socket.on('chat message', function(msg){
-        //debugger
-        $('#messages').append($('<li>').text(msg));
+        debugger
         playSound(msg);
+        // Log
+        var log = getCurrentTime() + "\t:\t" + dictSounds[msg].sound.src;
+        $('#messages').append($('<li>').text(log));
+
+        var objDiv = document.getElementById("messages");
+        objDiv.scrollTop = objDiv.scrollHeight;
       });
 
       function isValidURL(str) {
@@ -268,8 +306,17 @@
         if (checkURLs(soundURL, imageURL)){
           socket.emit('registerSound', soundURL, imageURL);
         }
+      }
 
-       }
+      function getCurrentTime(){
+        var currentdate = new Date(); 
+        return datetime = "-- :" + currentdate.getDate() + "/"
+                + (currentdate.getMonth()+1)  + "/" 
+                + currentdate.getFullYear() + " @ "  
+                + currentdate.getHours() + ":"  
+                + currentdate.getMinutes() + ":" 
+                + currentdate.getSeconds();
+      }
 
       //});
 
