@@ -84,11 +84,7 @@
     <!-- Buttons -->
     <section>
       <div id="freewall" class="free-wall">
-        <!--<div class="brick size11">
-          <div class='cover'>
-            <input type="image" src="http://www.echoecho.com/i/rainbow.gif" alt="Submit" width="48" height="48">
-          </div>
-        </div>-->
+        
       </div>
       <div class="brick size11 add-more">
         <div class='cover'>
@@ -104,7 +100,6 @@
         <input id="m" autocomplete="off" style=" color: rgb(130, 224, 255);"/><button>Send</button>
       </form>
     <section>
-
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
@@ -149,7 +144,6 @@
 
         var temp = '<div class="brick {size}" style="background-color: {color}"><div class="cover"><input type="image" src="{image}" alt="Submit" width="150" height="110" id={id} onclick="pressButtonSound(this.id)"></div></div>';
 
-
         $(".add-more").click(function() {
           addBlock();
         });
@@ -188,7 +182,6 @@
       }
 
       function addSound(obj) {
-        //debugger
         obj.sound = new Audio(obj.sound);
         dictSounds[obj.id] = obj;
       }
@@ -240,7 +233,6 @@
         playSound(msg);
       });
 
-
       function isValidURL(str) {
          return /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(str);
       }
@@ -265,7 +257,6 @@
           console.log("invalid");
           return false;
         }
-
         return true;
       }
 
@@ -281,10 +272,6 @@
        }
 
       //});
-
-
-
-
 
     </script>
 
