@@ -21,6 +21,9 @@
       form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
       form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
 
+      #log {
+        background-color: red;
+      }
       #messages { list-style-type: none; margin: 0; padding: 0; 
         /*background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; max-height: 200px;*/
       }
@@ -33,7 +36,8 @@
           bottom: 0;
           position: fixed;
           height: 100px;
-          overflow-y: scroll;
+        overflow-y: scroll;
+
       }
 
       .free-wall {
@@ -118,7 +122,9 @@
           </div>
         </li>
       </ul>-->
-      <ul id="messages"></ul>
+      <div id="log">
+        <ul id="messages"></ul>
+      </div>
     </footer>
 
     <section>
@@ -180,13 +186,13 @@
         });
         wall.fitWidth();
 
-        var temp = '<div class="brick {size}" style="background-color: {color}"><div class="cover"><input type="image" src="{image}" alt="Submit" width="150" height="110" id={id} onclick="pressButtonSound(this.id)"></div></div>';
+        var temp = '<div class="brick {size}" style="background-color: {color}"><div class="cover"><input type="image" src="{image}" alt="Submit" width="150" height="110" id={id} onclick="pressButtonSound(this.id)"><div style="text-align:center"><span>{text}</hola></div></div></div>';
 
         $(".add-more").click(function() {
           addBlock();
         });
 
-        function addBlock(imageURL, id)
+        function addBlock(imageURL, id, nameSound)
         {
           var html = "";
 
@@ -196,10 +202,16 @@
             image = imageURL;
           }
 
+          var text = nameSound;
+          if ( (text === undefined) || (text === null) ){
+            text = id;
+          }
+
           html += temp.replace('{size}', 'size11')
                 .replace('{color}', colour[colour.length * Math.random() << 0])
                 .replace('{image}', image)
-                .replace('{id}', id);
+                .replace('{id}', id)
+                .replace('{text}', text);
 
           wall.appendBlock(html);
         }
@@ -215,12 +227,15 @@
           //is playing
           dictSounds[id].sound.cloneNode(true).play();
         } else {
+          alert("hola " + dictSounds[id].sound)
           dictSounds[id].sound.play();          
         }
       }
 
       function addSound(obj) {
+        debugger
         obj.sound = new Audio(obj.sound);
+        obj.src = obj.sound;
         dictSounds[obj.id] = obj;
       }
 
@@ -238,7 +253,7 @@
           if ( (dictSounds[id] === null) || (dictSounds[id] === undefined) )
           {
             addSound(list[cont]);
-            addBlock(list[cont].img, list[cont].id);
+            addBlock(list[cont].img, list[cont].id, list[cont].name);
           }
         }
       }
@@ -270,8 +285,8 @@
       socket.on('newSound', function(msg){
         debugger
         addSound(msg);
-        addBlock(msg.img);
-      });      
+        addBlock(msg.img, msg.name);
+      });
 
       // Chat message
       socket.on('chat message', function(msg){
