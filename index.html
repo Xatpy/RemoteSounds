@@ -32,7 +32,7 @@
           width: 100%;
           bottom: 0;
           position: fixed;
-          height: 70px;
+          height: 100px;
           overflow-y: scroll;
       }
 
@@ -97,17 +97,18 @@
     <section>
       <div id="freewall" class="free-wall">
         
-      </div>
+      <!--</div>
       <div class="brick size11 add-more">
         <div class='cover'>
           <h2>Add more ++</h2>
         </div>
-      </div>
+      </div>-->
     </section>
 
     <!-- log -->
 
     <footer>
+      <h6><img alt="online users" src="./media/online.png"></img>Users online:<span id="numUsers">0</span></h6>
       <b>Log</b>
       <!--<ul class="collapsible" data-collapsible="accordion">
         <li>
@@ -135,6 +136,12 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
+
+    // Global variables
+    var connectedUsers = 0;
+    //
+
+
      // :::::::::::::::::: Freewall
       var colour = [
         "rgb(142, 68, 173)",
@@ -239,10 +246,17 @@
       var socket = io();
 
       // Load initial sound when new session
-      socket.on('newConnection', function(msg){
+      socket.on('newConnection', function(msg, numUsers){
         console.log("new connection");
-        //debugger
+        debugger
         initSounds(msg);
+        updateUsersCount(numUsers);
+      });
+
+      socket.on('disconnect', function(numUsers) { 
+        console.log("desconexion");
+        debugger
+        updateUsersCount(numUsers);
       });
 
       // Register new sound
@@ -316,6 +330,10 @@
                 + currentdate.getHours() + ":"  
                 + currentdate.getMinutes() + ":" 
                 + currentdate.getSeconds();
+      }
+
+      function updateUsersCount(numUsers){
+        document.getElementById("numUsers").textContent = numUsers;
       }
 
       //});

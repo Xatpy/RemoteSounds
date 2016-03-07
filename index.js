@@ -8,7 +8,6 @@ app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res){
   	res.sendfile('index.html');
-  	console.log("ja");
 });
 
 // Sounds by default
@@ -19,10 +18,13 @@ obj.listSounds = [];
 obj.listSounds.push(id1);
 obj.listSounds.push(id2);
 
+var connectedUsers = 0;
+
+
 io.on('connection', function(socket){
     console.log('New user connected');
-
-    io.emit('newConnection', obj);
+    connectedUsers++;
+    io.emit('newConnection', obj, connectedUsers);
 
 	socket.on('chat message', function(msg){
 		io.emit('chat message', msg);
@@ -40,6 +42,12 @@ io.on('connection', function(socket){
 		};
 		obj.listSounds.push(newSoundObj);
 		io.emit('newSound', newSoundObj);
+	});
+
+	socket.on('disconnect', function(numUsers) { 
+		console.log('User disconnected');
+		connectedUsers--;
+		io.emit('disconnect', connectedUsers);
 	});
 });
 
