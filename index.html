@@ -4,6 +4,8 @@
     <title>RemoteSounds</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <link rel="icon" type="image/png" href="media/ffavicon-16x16.png">
+
     <!-- Google Fonts-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -22,8 +24,9 @@
       form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
 
       #log {
-        background-color: red;
+        /*background-color: red;*/
       }
+
       #messages { list-style-type: none; margin: 0; padding: 0; 
         /*background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; max-height: 200px;*/
       }
@@ -70,7 +73,7 @@
             <h5><b>Add sound</b></h5>
           </div>
 
-          <div class="collapsible-body">
+          <div id="newSoundDivCollapsible" class="collapsible-body">
             <table>
               <tbody>
                 <tr>
@@ -80,7 +83,7 @@
                   <td colspan="2">
                     <input id="newSoundURL" autocomplete="off" class="validate" />
                   </td>
-                  <td rowspan="2" class="center-align">
+                  <td rowspan="3" class="center-align">
                     <button class="btn waves-effect waves-light center-align" onclick="registerNewSound()">Register sound</button>
                   </td>
                 </tr>
@@ -88,6 +91,12 @@
                   <td class="right-align"><label for="email"><b>Image</b> URL:</label></td>
                   <td class="input-field" colspan="2">
                     <input id="newImageURL" autocomplete="off" />
+                  </td>
+                </tr>
+                <tr>
+                  <td class="right-align"><label for="name"><b>Name</b>:</label></td>
+                  <td class="input-field" colspan="2">
+                    <input id="newSoundName" autocomplete="off" />
                   </td>
                 </tr>
               </tbody>
@@ -227,7 +236,6 @@
           //is playing
           dictSounds[id].sound.cloneNode(true).play();
         } else {
-          alert("hola " + dictSounds[id].sound)
           dictSounds[id].sound.play();          
         }
       }
@@ -286,6 +294,11 @@
         debugger
         addSound(msg);
         addBlock(msg.img, msg.name);
+
+        //"newSoundDivCollapsible"
+        $(newSoundDivCollapsible).on('click', function (e) {
+          $( $(this).attr('href') ).trigger('click');
+        });
       });
 
       // Chat message
@@ -331,9 +344,10 @@
         // Check input
         var soundURL = document.getElementById("newSoundURL").value;
         var imageURL = document.getElementById("newImageURL").value;
+        var name = document.getElementById("newSoundName").value;
 
         if (checkURLs(soundURL, imageURL)){
-          socket.emit('registerSound', soundURL, imageURL);
+          socket.emit('registerSound', soundURL, imageURL, name);
         }
       }
 
