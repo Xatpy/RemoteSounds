@@ -3,6 +3,9 @@ var express = require('express');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+// process.env.PORT lets the port be set by Heroku
+var port = process.env.PORT || 8080;
+
 // Load static files
 app.use(express.static(__dirname + '/public'));
 
@@ -51,6 +54,6 @@ io.on('connection', function(socket){
 	});
 });
 
-http.listen(3000, function(){
+http.listen(port, function(){
  	console.log('listening on *:3000');
 });
