@@ -8,6 +8,7 @@
 
     <!-- Google Fonts-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Sigmar+One' rel='stylesheet' type='text/css'>
 
     <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
 
@@ -30,7 +31,7 @@
       #messages { list-style-type: none; margin: 0; padding: 0; 
         /*background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; max-height: 200px;*/
       }
-      #messages li { padding: 5px 10px; }
+      #messages li { padding: 5px 10px; color: rgb(0, 204, 0);}
       #messages li:nth-child(odd) { background: #eee; }
 
       footer {
@@ -38,9 +39,12 @@
           width: 100%;
           bottom: 0;
           position: fixed;
-          height: 100px;
-        overflow-y: scroll;
+          height: 120px;  
+      }
 
+      #log {
+        overflow: scroll;
+        max-height: 100px;
       }
 
       .free-wall {
@@ -49,6 +53,79 @@
       .add-more {
         margin: 15px;
       }
+
+      #title {
+        font-family: 'Sigmar One', cursive;
+        color: white;
+        text-shadow:-2px -2px 0 #000,
+                     2px -2px 0 #000,
+                    -2px 2px 0 #000,
+                    2px 2px 0 #000;  
+      }
+
+
+      *{font-family:'Sigmar One', cursive ;}
+
+      body {
+        background: #757F9A; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to left, #757F9A , #D7DDE8); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to left, #757F9A , #D7DDE8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      }
+
+      #tableNewSound {    
+        background: #085078; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to left, #085078 , #85D8CE); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to left, #085078 , #85D8CE); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      }
+
+      #newSoundTitle {
+        background: #50C9C3; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to left, #50C9C3 , #96DEDA); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to left, #50C9C3 , #96DEDA); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */    
+      }
+
+      .labelsForm {
+        color: black;
+      }
+
+      .tdForm {
+        padding-bottom: 30px;
+        text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+      }
+
+      .push_button{
+        position:relative;
+        /*width:200px;*/
+        color:#FFF;
+        display:block;
+        text-decoration:none;
+        margin:0 auto;
+        border-radius:5px;
+        border:solid 1px #D94E3B;
+        background:#cb3b27;
+        text-align:center;
+        /*padding:0px 0px;*/
+        
+        -webkit-transition: all 0.1s;
+        -moz-transition: all 0.1s;
+        transition: all 0.1s;
+        
+        -webkit-box-shadow: 0px 9px 0px #84261a;
+              -moz-box-shadow: 0px 9px 0px #84261a;
+              box-shadow: 0px 9px 0px #84261a;
+      }
+      .push_button:active{
+          -webkit-box-shadow: 0px 2px 0px #84261a;
+          -moz-box-shadow: 0px 2px 0px #84261a;
+          box-shadow: 0px 2px 0px #84261a;
+          position:relative;
+          top:7px;
+      }
+
+      .blackOutline {
+        text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+      }
+
     </style>
 
 <!-- Compiled and minified CSS -->
@@ -57,46 +134,48 @@
   </head>
   <body>
     <!-- Title -->
-    <nav>
-      <div class="nav-wrapper">
+    <nav class="indigo darken-4">
+      <div class="nav-wrapper container" >
         <a href="#" class="brand-logo center">
-          <b>Remote sounds</b>
+          <span id="title"><strong>Remote sounds<strong></span>
         </a>
       </div>
     </nav>
 
     <!-- Add sound -->
     <section>
-      <ul class="collapsible z-depth-3" data-collapsible="accordion">
+      <ul class="collapsible z-depth-3" data-collapsible="accordion" id="newSoundTitle">
         <li>
-          <div class="collapsible-header"><i class="material-icons">note_add</i>
+          <div class="collapsible-header" id="newSoundTitle" style="color: rgb(0, 102, 102); text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;">
+            <i class="material-icons" style="color:rgb(51, 51, 153)">note_add</i>
             <h5><b>Add sound</b></h5>
           </div>
 
           <div id="newSoundDivCollapsible" class="collapsible-body">
-            <table>
+            <table id="tableNewSound">
               <tbody>
                 <tr>
-                  <td class="right-align">
-                    <label><b>Sound</b> URL(*):</label>
+                  <td class="right-align tdForm">
+                    <label class="labelsForm" for="name"><b>Name</b>:</label></td>                    
                   </td>
                   <td colspan="2">
-                    <input id="newSoundURL" autocomplete="off" class="validate" />
+                    <input id="newSoundName" autocomplete="off" class="validate"/>
                   </td>
                   <td rowspan="3" class="center-align">
-                    <button class="btn waves-effect waves-light center-align" onclick="registerNewSound()">Register sound</button>
+                    <button class="btn waves-effect waves-light center-align" onclick="registerNewSound()" id="blackOutline">Register sound</button>
                   </td>
                 </tr>
                 <tr>
-                  <td class="right-align"><label for="email"><b>Image</b> URL:</label></td>
+                  <td class="right-align tdForm"><label class="labelsForm" for="email"><b>Image</b> URL:</label></td>
                   <td class="input-field" colspan="2">
-                    <input id="newImageURL" autocomplete="off" />
+                    <input id="newImageURL" autocomplete="off" style:"color: black" />
                   </td>
                 </tr>
                 <tr>
-                  <td class="right-align"><label for="name"><b>Name</b>:</label></td>
+                  <td class="right-align tdForm">
+                  <label class="labelsForm">Sound URL:</label>
                   <td class="input-field" colspan="2">
-                    <input id="newSoundName" autocomplete="off" />
+                    <input id="newSoundURL" autocomplete="off" class="validate" />
                   </td>
                 </tr>
               </tbody>
@@ -107,21 +186,20 @@
     </section>   
 
     <!-- Buttons -->
-    <section>
+    <section id="gradient-background">
       <div id="freewall" class="free-wall">
         
-      <!--</div>
+      </div>
       <div class="brick size11 add-more">
         <div class='cover'>
           <h2>Add more ++</h2>
         </div>
-      </div>-->
+      </div>
     </section>
 
     <!-- log -->
-
     <footer>
-      <h6><img alt="online users" src="./media/online.png"></img>Users online:<span id="numUsers">0</span></h6>
+      <h6><img alt="online users" src="./media/online.png"></img>Users online :&emsp;<span id="numUsers">0</span></h6>
       <b>Log</b>
       <!--<ul class="collapsible" data-collapsible="accordion">
         <li>
@@ -195,7 +273,7 @@
         });
         wall.fitWidth();
 
-        var temp = '<div class="brick {size}" style="background-color: {color}"><div class="cover"><input type="image" src="{image}" alt="Submit" width="150" height="110" id={id} onclick="pressButtonSound(this.id)"><div style="text-align:center"><span>{text}</hola></div></div></div>';
+        var temp = '<div class="brick {size}" style="background-color: {color}"><div class="cover"><input type="image" class="push_button" src="{image}" alt="Submit" width="115" height="110" id={id} onclick="pressButtonSound(this.id)"><div style="text-align:center; margin-top:8px"><span id="blackOutline">{text}</hola></div></div></div>';
 
         $(".add-more").click(function() {
           addBlock();
