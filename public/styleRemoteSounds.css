@@ -1,107 +1,107 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font: 13px Helvetica, Arial; }
-      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+body { font: 13px Helvetica, Arial; }
+form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
 
-      #log {
-        /*background-color: red;*/
-      }
+#log {
+  /*background-color: red;*/
+}
 
-      #messages { list-style-type: none; margin: 0; padding: 0; 
-        /*background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; max-height: 200px;*/
-      }
-      #messages li { padding: 5px 10px; color: rgb(0, 204, 0);}
-      #messages li:nth-child(odd) { background: #eee; }
+#messages { list-style-type: none; margin: 0; padding: 0; 
+  /*background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; max-height: 200px;*/
+}
+#messages li { padding: 5px 10px; color: rgb(0, 204, 0);}
+#messages li:nth-child(odd) { background: #eee; }
 
-      footer {
-          background-color: #333;
-          width: 100%;
-          bottom: 0;
-          position: fixed;
-          height: 120px;  
-      }
+footer {
+    background-color: #333;
+    width: 100%;
+    bottom: 0;
+    position: fixed;
+    height: 120px;  
+}
 
-      #log {
-        overflow: scroll;
-        max-height: 100px;
-      }
+#log {
+  overflow: scroll;
+  max-height: 100px;
+}
 
-      .free-wall {
-        margin: 15px;
-      }
-      .add-more {
-        margin: 15px;
-      }
+.free-wall {
+  margin: 15px;
+}
+.add-more {
+  margin: 15px;
+}
 
-      #title {
-        font-family: 'Sigmar One', cursive;
-        color: white;
-        text-shadow:-2px -2px 0 #000,
-                     2px -2px 0 #000,
-                    -2px 2px 0 #000,
-                    2px 2px 0 #000;  
-      }
+#title {
+  font-family: 'Sigmar One', cursive;
+  color: white;
+  text-shadow:-2px -2px 0 #000,
+               2px -2px 0 #000,
+              -2px 2px 0 #000,
+              2px 2px 0 #000;  
+}
 
 
-      *{font-family:'Sigmar One', cursive ;}
+*{font-family:'Sigmar One', cursive ;}
 
-      body {
-        background: #757F9A; /* fallback for old browsers */
-        background: -webkit-linear-gradient(to left, #757F9A , #D7DDE8); /* Chrome 10-25, Safari 5.1-6 */
-        background: linear-gradient(to left, #757F9A , #D7DDE8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-      }
+body {
+  background: #757F9A; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #757F9A , #D7DDE8); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #757F9A , #D7DDE8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
 
-      #tableNewSound {    
-        background: #085078; /* fallback for old browsers */
-        background: -webkit-linear-gradient(to left, #085078 , #85D8CE); /* Chrome 10-25, Safari 5.1-6 */
-        background: linear-gradient(to left, #085078 , #85D8CE); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-      }
+#tableNewSound {    
+  background: #085078; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #085078 , #85D8CE); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #085078 , #85D8CE); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
 
-      #newSoundTitle {
-        background: #50C9C3; /* fallback for old browsers */
-        background: -webkit-linear-gradient(to left, #50C9C3 , #96DEDA); /* Chrome 10-25, Safari 5.1-6 */
-        background: linear-gradient(to left, #50C9C3 , #96DEDA); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */    
-      }
+#newSoundTitle {
+  background: #50C9C3; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #50C9C3 , #96DEDA); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #50C9C3 , #96DEDA); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */    
+}
 
-      .labelsForm {
-        color: black;
-      }
+.labelsForm {
+  color: black;
+}
 
-      .tdForm {
-        padding-bottom: 30px;
-        text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
-      }
+.tdForm {
+  padding-bottom: 30px;
+  text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+}
 
-      .push_button{
-        position:relative;
-        /*width:200px;*/
-        color:#FFF;
-        display:block;
-        text-decoration:none;
-        margin:0 auto;
-        border-radius:5px;
-        border:solid 1px #D94E3B;
-        background:#cb3b27;
-        text-align:center;
-        /*padding:0px 0px;*/
-        
-        -webkit-transition: all 0.1s;
-        -moz-transition: all 0.1s;
-        transition: all 0.1s;
-        
-        -webkit-box-shadow: 0px 9px 0px #84261a;
-              -moz-box-shadow: 0px 9px 0px #84261a;
-              box-shadow: 0px 9px 0px #84261a;
-      }
-      .push_button:active{
-          -webkit-box-shadow: 0px 2px 0px #84261a;
-          -moz-box-shadow: 0px 2px 0px #84261a;
-          box-shadow: 0px 2px 0px #84261a;
-          position:relative;
-          top:7px;
-      }
+.push_button{
+  position:relative;
+  /*width:200px;*/
+  color:#FFF;
+  display:block;
+  text-decoration:none;
+  margin:0 auto;
+  border-radius:5px;
+  border:solid 1px #D94E3B;
+  background:#cb3b27;
+  text-align:center;
+  /*padding:0px 0px;*/
+  
+  -webkit-transition: all 0.1s;
+  -moz-transition: all 0.1s;
+  transition: all 0.1s;
+  
+  -webkit-box-shadow: 0px 9px 0px #84261a;
+        -moz-box-shadow: 0px 9px 0px #84261a;
+        box-shadow: 0px 9px 0px #84261a;
+}
+.push_button:active{
+    -webkit-box-shadow: 0px 2px 0px #84261a;
+    -moz-box-shadow: 0px 2px 0px #84261a;
+    box-shadow: 0px 2px 0px #84261a;
+    position:relative;
+    top:7px;
+}
 
-      .blackOutline {
-        text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-      }     
+.blackOutline {
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}     
