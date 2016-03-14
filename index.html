@@ -4,7 +4,7 @@
     <title>RemoteSounds</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="icon" type="image/png" href="media/ffavicon-16x16.png">
+    <link rel="icon" type="image/png" href="media/favicon-16x16.png">
 
     <link rel="stylesheet" type="text/css" href="styleRemoteSounds.css" />
 
@@ -53,21 +53,28 @@
                     <input id="newSoundName" autocomplete="off" class="validate"/>
                   </td>
                   <td rowspan="3" class="center-align">
-                    <button class="btn waves-effect waves-light center-align" onclick="registerNewSound()" id="blackOutline">Register sound</button>
+                    <button class="btn waves-effect waves-light center-align" onclick="registerNewSound()" id="blackOutline" style="text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;">Register sound</button>
                   </td>
                 </tr>
+                
                 <tr>
-                  <td class="right-align tdForm"><label class="labelsForm" for="email"><b>Image</b> URL:</label></td>
+                  <td class="right-align tdForm">
+                  <label class="labelsForm">Sound URL: (MP3)</label>
+                  <td class="input-field" colspan="2">
+                    <input id="newSoundURL" autocomplete="off" class="validate" />
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="right-align tdForm"><label class="labelsForm" for="email"><b>Image</b> URL: (JPG/PNG)</label></td>
                   <td class="input-field" colspan="2">
                     <input id="newImageURL" autocomplete="off" style:"color: black" />
                   </td>
                 </tr>
-                <tr>
-                  <td class="right-align tdForm">
-                  <label class="labelsForm">Sound URL:</label>
-                  <td class="input-field" colspan="2">
-                    <input id="newSoundURL" autocomplete="off" class="validate" />
-                  </td>
+
+                <tr id="validatorRow" style="display:none">
+                  <td></td>
+                  <td colspan="3" style="color:red"><span id="messagesError">JAJAJA</span></td>
                 </tr>
               </tbody>
             </table>
@@ -142,7 +149,7 @@
         });
         wall.fitWidth();
 
-        var temp = '<div class="brick {size}" style="background-color: {color}"><div class="cover"><input type="image" class="push_button" src="{image}" alt="Submit" width="115" height="110" id={id} onclick="pressButtonSound(this.id)"><div style="text-align:center; margin-top:3px"><span id="blackOutline">{text}</hola></div></div></div>';
+        var temp = '<div class="brick {size}" style="background-color: {color}"><div class="cover" style="margin:5px;"><input type="image" class="push_button" src="{image}" alt="Submit" width="115" height="110" id={id} onclick="pressButtonSound(this.id)"><div style="text-align:center; margin-top:12px"><span id="blackOutline">{text}</hola></div></div></div>';
 
         $(".add-more").click(function() {
           addBlock();
@@ -150,6 +157,7 @@
 
         function addBlock(imageURL, id, nameSound)
         {
+          debugger
           var html = "";
 
           var image = "http://www.echoecho.com/i/rainbow.gif"; // default
@@ -187,9 +195,22 @@
       }
 
       function addSound(obj) {
+        debugger
         obj.sound = new Audio(obj.sound);
         obj.src = obj.sound;
         dictSounds[obj.id] = obj;
+
+        var sound = obj;
+        debugger
+        document.getElementById("messagesError").textContent = "Loading...";
+        document.getElementById("messagesError").style.color = "green";
+        obj.sound.oncanplay = function() {
+          addBlock(sound.img, sound.id, sound.name);
+          document.getElementById("messagesError").textContent = "";
+          $(newSoundDivCollapsible).on('click', function (e) {
+            $( $(this).attr('href') ).trigger('click');
+          });
+        }
       }
 
       function loadSound(id, url){
@@ -205,7 +226,7 @@
           if ( (dictSounds[id] === null) || (dictSounds[id] === undefined) )
           {
             addSound(list[cont]);
-            addBlock(list[cont].img, list[cont].id, list[cont].name);
+            //addBlock(list[cont].img, list[cont].id, list[cont].name);
           }
         }
       }
@@ -234,12 +255,6 @@
       // Load new sound event
       socket.on('newSound', function(msg){
         addSound(msg);
-        addBlock(msg.img, msg.name);
-
-        //"newSoundDivCollapsible"
-        $(newSoundDivCollapsible).on('click', function (e) {
-          $( $(this).attr('href') ).trigger('click');
-        });
       });
 
       // Chat message
@@ -264,19 +279,25 @@
           if (messageError === null) {
             messageError = "";
           }
-          messageError += "Sound URL is invalid \n";
+          messageError += "# Sound URL is invalid. \r\n";
         }
         if (!isValidURL(imageURL)){
           if (messageError === null) {
             messageError = "";
           }
-          messageError += "Image URL is invalid \n";
+          messageError += "# Image URL is invalid. \r\n";
         }
 
         if (messageError !== null){
           console.log("invalid");
+          document.getElementById("validatorRow").style.display = '';
+          document.getElementById("messagesError").style.color = "red";
+          document.getElementById("messagesError").textContent = messageError;
           return false;
         }
+
+        document.getElementById("validatorRow").style.display = 'none';
+        document.getElementById("messagesError").textContent = "";
         return true;
       }
 
@@ -288,6 +309,11 @@
 
         if (checkURLs(soundURL, imageURL)){
           socket.emit('registerSound', soundURL, imageURL, name);
+
+          //Clean
+          document.getElementById("newSoundURL").value = "";
+          document.getElementById("newImageURL").value = "";
+          document.getElementById("newSoundURL").value = "";
         }
       }
 
