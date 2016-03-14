@@ -38,7 +38,7 @@
       <ul class="collapsible z-depth-3" data-collapsible="accordion" id="newSoundTitle">
         <li>
           <div class="collapsible-header" id="newSoundTitle" style="color: rgb(0, 102, 102); text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;">
-            <i class="material-icons" style="color:rgb(51, 51, 153)">note_add</i>
+            <i class="material-icons" style="color:rgb(51, 51, 153)" id="iconNewSound">note_add</i>
             <h5><b>Add sound</b></h5>
           </div>
 
@@ -204,7 +204,7 @@
         debugger
         document.getElementById("messagesError").textContent = "Loading...";
         document.getElementById("messagesError").style.color = "green";
-        obj.sound.oncanplay = function() {
+        obj.sound.onloadeddata = function() {
           addBlock(sound.img, sound.id, sound.name);
           document.getElementById("messagesError").textContent = "";
           $(newSoundDivCollapsible).on('click', function (e) {
@@ -311,9 +311,10 @@
           socket.emit('registerSound', soundURL, imageURL, name);
 
           //Clean
-          document.getElementById("newSoundURL").value = "";
+          document.getElementById("newSoundName").value = "";
           document.getElementById("newImageURL").value = "";
           document.getElementById("newSoundURL").value = "";
+          document.getElementById("iconNewSound").click();
         }
       }
 

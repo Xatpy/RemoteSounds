@@ -40,8 +40,9 @@ io.on('connection', function(socket){
 	});
 
 	socket.on('registerSound', function(soundURL, imageURL, name){
-		console.log(getDateTime() + " - New sound registered: " + soundURL);
-		console.log(getDateTime() + " - New image registered: " + imageURL);
+		console.log(getDateTime() + " - New sound registered: NAME  : " + name);
+		console.log(getDateTime() + " - New sound registered: SOUND : " + soundURL);
+		console.log(getDateTime() + " - New image registered: IMAGE : " + imageURL);
 		var newSoundObj = { 
 			"id":obj.listSounds.length + 1, 
 			"name": name, 
